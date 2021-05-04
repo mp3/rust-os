@@ -1,5 +1,5 @@
 [package]
-name = "rust-os"
+name = "rusty-os"
 version = "0.1.0"
 authors = ["mp3 <im.in.a.coma.xxx@gmail.com>"]
 edition = "2018"
