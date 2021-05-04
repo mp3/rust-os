@@ -26,7 +26,7 @@ struct ColorCode(u8);
 
 impl ColorCode {
   fn new(foreground: Color, background: Color) -> ColorCode {
-    Color((background as u8) << 4 | (foreground as u8))
+    ColorCode((background as u8) << 4 | (foreground as u8))
   }
 }
 
@@ -42,7 +42,7 @@ const BUFFER_WIDTH: usize = 80;
 
 #[repr(transparent)]
 struct Buffer {
-  chars: [[ScreenChar; BUFFER_WIDTH; BUFFER_HEIGHT]]
+  chars: [[ScreenChar; BUFFER_WIDTH]; BUFFER_HEIGHT],
 }
 
 pub struct Writer {
@@ -54,7 +54,7 @@ pub struct Writer {
 impl Writer {
   pub fn write_byte(&mut self, byte: u8) {
     match byte {
-      b'/n' => self.new_line(),
+      b'\n' => self.new_line(),
       byte => {
         if self.column_position >= BUFFER_WIDTH {
           self.new_line();
@@ -83,4 +83,16 @@ impl Writer {
   }
 
   fn new_line(&mut self) {/* TODO */}
+}
+
+pub fn print_something() {
+  let mut writer = Writer {
+    column_position: 0,
+    color_code: ColorCode::new(Color::Yellow, Color::Black),
+    buffer: unsafe { &mut *(0xb8000 as *mut Buffer) },
+  };
+
+  writer.write_byte(b'H');
+  writer.write_string("ello ");
+  writer.write_string("Wörld!");
 }
