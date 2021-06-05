@@ -4,6 +4,11 @@
 #![test_runner(crate::test_runner)]
 #![reexport_test_harness_main = "test_main"]
 
+use core::panic::PanicInfo;
+
+mod vga_buffer;
+mod serial;
+
 #[cfg(test)]
 fn test_runner(tests: &[&dyn Fn()]) {
     println!("Running {} tests", tests.len());
@@ -13,10 +18,6 @@ fn test_runner(tests: &[&dyn Fn()]) {
 
     exit_qemu(QemuExitCode::Success);
 }
-
-use core::panic::PanicInfo;
-
-mod vga_buffer;
 
 static HELLO: &[u8] = b"Hello World!";
 
