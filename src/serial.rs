@@ -6,8 +6,8 @@ lazy_static! {
   pub static ref SERIAL1: Mutex<SerialPort> = {
     let mut serial_port = unsafe { SerialPort::new(0x3F8) };
     serial_port.init();
-    Mutex::new(serial_port);
-  }
+    Mutex::new(serial_port)
+  };
 }
 
 #[doc(hidden)]
@@ -19,7 +19,7 @@ pub fn _print(args: ::core::fmt::Arguments) {
 #[macro_export]
 macro_rules! serial_print {
   ($($arg:tt)*) => {
-    $crate::serial::_print(format_args!($(args)*));
+    $crate::serial::_print(format_args!($($arg)*));
   };
 }
 
