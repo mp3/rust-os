@@ -13,6 +13,10 @@ static HELLO: &[u8] = b"Hello World!";
 pub extern "C" fn _start() -> ! {
   println!("Hello World{}", "!");
 
+  rusty_os::init();
+
+  x86_64::instructions::interrupts::int3();
+
   #[cfg(test)]
   test_main();
 
