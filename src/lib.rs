@@ -11,6 +11,10 @@ pub mod vga_buffer;
 pub mod serial;
 pub mod interrupts;
 
+pub fn init() {
+  interrupts::init_idt();
+}
+
 pub trait Testable {
   fn run(&self) -> ();
 }
