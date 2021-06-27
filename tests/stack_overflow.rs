@@ -1,10 +1,13 @@
 #![no_std]
 #![no_main]
+#![feature(abi_x86_interrupt)]
 
 use core::panic::PanicInfo;
 use rusty_os::serial_print;
 use lazy_static::lazy_static;
 use x86_64::structures::idt::InterruptDescriptorTable;
+use rusty_os::{exit_qemu, QemuExitCode, serial_println};
+use x86_64::structures::idt::InterruptStackFrame;
 
 lazy_static! {
   static ref TEST_IDT: InterruptDescriptorTable = {
@@ -21,6 +24,15 @@ lazy_static! {
 
 pub fn init_test_idt() {
   TEST_IDT.load();
+}
+
+extern "x86-interrupt" fn test_double_fault_handler(
+  _stack_frame: &mut InterruptStackFrame,
+  _error_code: u64,
+) -> ! {
+  serial_println!("[ok]");
+  exit_qemu(QemuExitCode::Success);
+  loop {}
 }
 
 #[no_mangle]
