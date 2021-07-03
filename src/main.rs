@@ -15,6 +15,9 @@ pub extern "C" fn _start() -> ! {
 
   rusty_os::init();
 
+  let ptr = 0xdeadbeaf as *mut u32;
+  unsafe { *ptr = 42; }
+
   fn stack_overflow() {
     stack_overflow();
   }
@@ -25,7 +28,7 @@ pub extern "C" fn _start() -> ! {
   test_main();
 
   println!("It did not crash!");
-  loop {}
+  blog_os::hlt_loop();
 }
 
 #[cfg(not(test))]
