@@ -64,6 +64,12 @@ pub fn exit_qemu(exit_code: QemuExitCode) {
   }
 }
 
+pub fn hlt_loop() -> ! {
+  loop {
+      x86_64::instructions::hlt();
+  }
+}
+
 #[cfg(test)]
 #[no_mangle]
 pub extern "C" fn _start() -> ! {

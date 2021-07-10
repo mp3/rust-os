@@ -28,7 +28,7 @@ pub extern "C" fn _start() -> ! {
   test_main();
 
   println!("It did not crash!");
-  blog_os::hlt_loop();
+  rusty_os::hlt_loop();
 }
 
 #[cfg(not(test))]
