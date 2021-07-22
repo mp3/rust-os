@@ -15,8 +15,13 @@ pub extern "C" fn _start() -> ! {
 
   rusty_os::init();
 
-  let ptr = 0xdeadbeaf as *mut u32;
+  let ptr = 0x20402b as *mut u32;
+
+  unsafe { let x = *ptr; } 
+  println!("read worked");
+
   unsafe { *ptr = 42; }
+  println!("write worked");
 
   fn stack_overflow() {
     stack_overflow();
